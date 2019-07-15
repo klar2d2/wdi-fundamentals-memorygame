@@ -21,24 +21,40 @@ var cards = [
   cardImage: "images/queen-of-diamonds.png"
 }
 ];
+
 var cardsInPlay = [];
 var checkForMatch = function () {
   if (cardsInPlay[0] === cardsInPlay[1]){
-    console.log("You found a match!");
+    alert("You found a match!");
   } else {
-    console.log("Sorry, try again.");
+    alert("Sorry, try again.");
   }
 }
 
+  var flipCard = function() {
 
-var flipCard = function(cardId) {
-  console.log("User flipped " + cards[cardId].rank);
-  console.log(cards[cardId].suit);
-  console.log(cards[cardId].cardImage);
-  cardsInPlay.push(cards[cardId]);
-  if (cardsInPlay.length === 2){
-    checkForMatch()
+    var cardId = this.getAttribute('data-id');
+    console.log("User flipped " + cards[cardId].rank);
+    console.log(cards[cardId].suit);
+    console.log(cards[cardId].cardImage);
+
+    cardsInPlay.push(cards[cardId].rank);
+    this.setAttribute('src', cards[cardId].cardImage)
+    if (cardsInPlay.length === 2){
+      checkForMatch();
+    };
     }
-  }
-  flipCard([0])
-  flipCard([2])
+
+
+  var createBoard = function() {
+    for (var i = 0 ; i < cards.length; i++) {
+      var cardElement = document.createElement('img');
+      cardElement.setAttribute('src', '/Users/koberyan/Documents/fundamentals/wdi-fundamentals-memorygame/memory_game/images/back.png');
+      cardElement.setAttribute('data-id', i);
+      cardElement.addEventListener('click', flipCard);
+      document.getElementById("game-board").appendChild(cardElement)
+    };
+  };
+
+
+  createBoard();
